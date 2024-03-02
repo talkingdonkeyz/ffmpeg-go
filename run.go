@@ -90,10 +90,10 @@ func _allocateFilterStreamNames(nodes []*Node, outOutingEdgeMaps map[int]map[Lab
 		om := outOutingEdgeMaps[n.Hash()]
 		// todo sort
 		for _, l := range _getAllLabelsSorted(om) {
-			// 			if len(om[l]) > 1 {
-			// 				panic(fmt.Sprintf(`encountered %s with multiple outgoing edges
-			// with same upstream label %s; a 'split'' filter is probably required`, n.name, l))
-			// 			}
+			if len(om[l]) > 1 {
+				panic(fmt.Sprintf(`encountered %s with multiple outgoing edges
+with same upstream label %s; a 'split'' filter is probably required`, n.name, l))
+			}
 			streamNameMap[fmt.Sprintf("%d%s", n.Hash(), l)] = fmt.Sprintf("s%d", sc)
 			sc += 1
 		}

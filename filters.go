@@ -24,6 +24,11 @@ func (s *Stream) Filter(filterName string, args Args, kwArgs ...KwArgs) *Stream 
 	return Filter([]*Stream{s}, filterName, args, MergeKwArgs(kwArgs))
 }
 
+func (s *Stream) AMix(mixParentNode *Stream, kwargs ...KwArgs) *Stream {
+	AssertType(s.Type, "FilterableStream", "amix")
+	return NewFilterNode("amix", []*Stream{s, mixParentNode}, 2, nil, MergeKwArgs(kwargs)).Stream("", "")
+}
+
 func (s *Stream) Split() *Node {
 	AssertType(s.Type, "FilterableStream", "split")
 	return NewFilterNode("split", []*Stream{s}, 1, nil, nil)
